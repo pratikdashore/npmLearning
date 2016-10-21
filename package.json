@@ -1,19 +1,19 @@
 {
-  "name": "firstapp",
-  "version": "1.0.0",
-  "description": "This is to learn npm and git hub",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pratikdashore/npmLearning.git"
-  },
-  "author": "Pratik Dashore",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/pratikdashore/npmLearning/issues"
-  },
-  "homepage": "https://github.com/pratikdashore/npmLearning#readme"
+    "name": "firstapp",
+    "version": "1.0.0",
+    "description": "This is to learn npm and git hub",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pratikdashore/npmLearning.git"
+    },
+    "author": "Pratik Dashore",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/pratikdashore/npmLearning/issues"
+    },
+    "homepage": "https://github.com/pratikdashore/npmLearning#readme"
 }
