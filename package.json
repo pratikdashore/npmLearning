@@ -4,7 +4,8 @@
     "description": "This is to learn npm and git hub with angular 1.5 test",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\""
+        "test": "echo \"Error: no test specified\"",
+        "install": "bower install"
     },
     "repository": {
         "type": "git",
@@ -16,7 +17,5 @@
         "url": "https://github.com/pratikdashore/npmLearning/issues"
     },
     "homepage": "https://github.com/pratikdashore/npmLearning#readme",
-    "devDependencies": {
-        "angular": "1.5.8"
-    }
+    "dependencies": {}
 }
