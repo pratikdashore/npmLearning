@@ -15,5 +15,8 @@
     "bugs": {
         "url": "https://github.com/pratikdashore/npmLearning/issues"
     },
-    "homepage": "https://github.com/pratikdashore/npmLearning#readme"
+    "homepage": "https://github.com/pratikdashore/npmLearning#readme",
+    "devDependencies": {
+        "angular": "1.5.8"
+    }
 }
