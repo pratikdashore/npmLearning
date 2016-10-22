@@ -21,6 +21,7 @@
     "bootstrap": "^3.3.7",
     "moment": "^2.15.1",
     "font-awesome": "font-awsome#^4.6.3",
-    "angular-sanitize": "^1.5.8"
+    "angular-sanitize": "^1.5.8",
+    "angular-bootstrap": "^2.2.0"
   }
 }
