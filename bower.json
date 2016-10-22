@@ -1,27 +1,27 @@
 {
-  "name": "npmlearning",
-  "description": "This is to learn npm bower and git hub with angular 1.5 test",
-  "main": "app.js",
-  "authors": [
-    "Pratik Dashore"
-  ],
-  "license": "ISC",
-  "homepage": "https://github.com/pratikdashore/npmLearning",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular": "^1.5.8",
-    "angular-ui-router": "ui-router#^0.3.1",
-    "AngularJS-Toaster": "toaster#^2.0.0",
-    "bootstrap": "^3.3.7",
-    "moment": "^2.15.1",
-    "font-awesome": "font-awsome#^4.6.3",
-    "angular-sanitize": "^1.5.8",
-    "angular-bootstrap": "^2.2.0"
-  }
+    "name": "pdinstallfrontendbower",
+    "description": "This is to learn npm bower and git hub with angular 1.5 test",
+    "main": "app.js",
+    "authors": [
+        "Pratik Dashore"
+    ],
+    "license": "ISC",
+    "homepage": "https://github.com/pratikdashore/npmLearning",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "^1.5.8",
+        "angular-ui-router": "ui-router#^0.3.1",
+        "AngularJS-Toaster": "toaster#^2.0.0",
+        "bootstrap": "^3.3.7",
+        "moment": "^2.15.1",
+        "font-awesome": "font-awsome#^4.6.3",
+        "angular-sanitize": "^1.5.8",
+        "angular-bootstrap": "^2.2.0"
+    }
 }
