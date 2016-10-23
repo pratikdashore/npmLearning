@@ -1,0 +1,7 @@
+{
+    "camelcase": true,
+    "curly": true,
+    "forin": true,
+    "undef": false,
+    "unused": false
+}

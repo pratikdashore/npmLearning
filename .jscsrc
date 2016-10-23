@@ -1,0 +1,16 @@
+{
+    "requireCurlyBraces": [
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "try",
+        "catch"
+    ],
+    "excludeFiles": ["node_modules/**", "bower_components/**"],
+    "requireCamelCaseOrUpperCaseIdentifiers": true,
+    "disallowMultipleLineBreaks": true,
+    "requireParenthesesAroundIIFE": true
+
+}
