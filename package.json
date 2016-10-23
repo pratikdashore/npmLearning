@@ -1,21 +1,24 @@
 {
-    "name": "pdinstallfrontend",
-    "version": "1.0.0",
-    "description": "This is to learn npm and git hub with angular 1.5 test",
-    "main": "app.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\"",
-        "install": "bower install"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/pratikdashore/npmLearning.git"
-    },
-    "author": "Pratik Dashore",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/pratikdashore/npmLearning/issues"
-    },
-    "homepage": "https://github.com/pratikdashore/npmLearning#readme",
-    "dependencies": {}
+  "name": "pdinstallfrontend",
+  "version": "1.0.0",
+  "description": "This is to learn npm and git hub with angular 1.5 test",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\"",
+    "install": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pratikdashore/npmLearning.git"
+  },
+  "author": "Pratik Dashore",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pratikdashore/npmLearning/issues"
+  },
+  "homepage": "https://github.com/pratikdashore/npmLearning#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
 }
