@@ -10,7 +10,7 @@
     ],
     "excludeFiles": ["node_modules/**", "bower_components/**"],
     "requireCamelCaseOrUpperCaseIdentifiers": true,
-    "disallowMultipleLineBreaks": true,
+    "disallowMultipleLineBreaks": null,
     "requireParenthesesAroundIIFE": true
 
 }

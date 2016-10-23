@@ -11,7 +11,6 @@ gulp.task('hello-world', function() {
 
 
 
-
 /////////////
 function log(msg) {
     if (typeof msg === 'object') {
@@ -23,6 +22,4 @@ function log(msg) {
     } else {
         gulpUtil.log(gulpUtil.colors.blue(msg));
     }
-    if (true) { console.log('hello'); }
-
 }
