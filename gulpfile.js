@@ -4,7 +4,7 @@ var jscs = require('gulp-jscs');
 var gulpUtil = require('gulp-util');
 
 gulp.task('hello-world', function() {
-    console.log('hello gulp');
+    log('hello gulp');
 });
 
 
