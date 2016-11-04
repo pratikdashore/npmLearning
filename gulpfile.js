@@ -7,11 +7,9 @@ var browserSync = require('browser-sync');
 
 var $p = require('gulp-load-plugins')({ lazy: true });
 
-// var jscs = require('gulp-jscs');
-// var gulpUtil = require('gulp-util');
-// var jshint = require('gulp-jshint');
-// var gulpif = require('gulp-if');
-// var gulpPrint = require('gulp-print');
+gulp.task('help', $p.taskListing);
+
+gulp.task('default', ['help']);
 
 gulp.task('hello-world', function() {
     log('hello gulp');
@@ -21,7 +19,8 @@ gulp.task('vet', function() {
 
     log('Analyzing source with jscs and jshint');
 
-    return gulp.src(config.allJs)
+    return gulp
+        .src(config.allJs)
         .pipe($p.if(args.verbose, $p.print()))
         .pipe($p.jscs())
         .pipe($p.jshint())
@@ -29,7 +28,7 @@ gulp.task('vet', function() {
         .pipe($p.jshint.reporter('fail'));
 });
 
-gulp.task('styles', ['clean-styles'], function(done) {
+gulp.task('styles', ['clean-styles'], function() {
 
     log('Compiling less to css');
 
@@ -65,7 +64,7 @@ gulp.task('wiredep', function() {
         .pipe(gulp.dest(config.client));
 });
 
-gulp.task('inject', ['wiredep', 'styles'], function() {
+gulp.task('inject', ['wiredep'], function() {
     log('Wire up the app css into html and call wiredep');
     return gulp
         .src(config.index)
