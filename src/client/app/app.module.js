@@ -3,5 +3,6 @@
 
     angular
         .module('npmLearning', []);
+    console.log('hello');
 
 }());

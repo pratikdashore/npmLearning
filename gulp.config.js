@@ -9,6 +9,7 @@ module.exports = function() {
     var root = './';
     var wiredep = require('wiredep');
     var bowerFiles = wiredep({ devDependencies: true })['js'];
+    var specRunnerFile = 'specs.html';
 
     var config = {
 
@@ -26,6 +27,8 @@ module.exports = function() {
         html: clientApp + '**/*.html',
         htmltemplates: clientApp + '**/*.html',
         index: client + 'index.html',
+        clientCss: clientStyles + '**/.*.css',
+        source: 'src/',
 
         /**
          * all js files of project to vet
@@ -72,6 +75,13 @@ module.exports = function() {
                 root: 'app/'
             }
         },
+
+        /**
+         * specs.html, our HTML spec runner
+         */
+        specRunner: client + specRunnerFile,
+        specRunnerFile: specRunnerFile,
+
         getWiredepDefaultOptions: getWiredepDefaultOptions,
 
         /**

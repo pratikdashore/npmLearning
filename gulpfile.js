@@ -138,6 +138,7 @@ function serve(isDev, specRunner) {
         })
         .on('start', function() {
             log('*** nodemon started');
+            startBrowserSync(isDev, specRunner);
         })
         .on('crash', function() {
             log('*** nodemon crashed: script crashed for some reason');
@@ -145,6 +146,55 @@ function serve(isDev, specRunner) {
         .on('exit', function() {
             log('*** nodemon exited cleanly');
         });
+}
+
+function changeEvent(event) {
+    var srcPattern = new RegExp('/.*(?=/' + config.source + ')/');
+    log('File ' + event.path.replace(srcPattern, '') + ' ' + event.type);
+}
+
+function startBrowserSync(isDev, specRunner) {
+    if (args.nosync || browserSync.active) {
+        return;
+    }
+
+    log('Starting browser-sync on port ' + port);
+
+    if (isDev) {
+        gulp.watch([config.less], ['styles'])
+            .on('change', changeEvent);
+    } else {
+        gulp.watch([config.less, config.clientCss, config.js, config.html], ['optimize', browserSync.reload])
+            .on('change', changeEvent);
+    }
+
+    var options = {
+        proxy: 'localhost:' + port,
+        port: 3000,
+        files: isDev ? [
+            config.client + '**/*.*',
+            '!' + config.less,
+            config.temp + '**/*.css'
+        ] : [],
+        ghostMode: {
+            clicks: true,
+            location: false,
+            forms: true,
+            scroll: true
+        },
+        injectChanges: true,
+        logFileChanges: true,
+        logLevel: 'debug',
+        logPrefix: 'gulp-patterns',
+        notify: true,
+        reloadDelay: 0 //1000
+    };
+
+    if (specRunner) {
+        options.startPath = config.specRunnerFile;
+    }
+
+    browserSync(options);
 }
 
 function clean(path) {
