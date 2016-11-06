@@ -5,27 +5,41 @@ module.exports = function() {
     var clientContent = client + 'content/';
     var clientStyles = clientContent + 'styles/';
     var temp = './.tmp/';
+    var server = './src/server/';
+    var root = './';
+    var wiredep = require('wiredep');
+    var bowerFiles = wiredep({ devDependencies: true })['js'];
+
     var config = {
 
-        //temp files folder
+        /**
+         * file paths
+         */
 
         temp: temp,
+        root: root,
         build: './build/',
+        client: client,
+        server: server,
         fonts: './bower_components/font-awesome/fonts/**/*.*',
         images: clientContent + 'images/**/*.*',
+        html: clientApp + '**/*.html',
         htmltemplates: clientApp + '**/*.html',
+        index: client + 'index.html',
 
-        // all js files of project to vet
+        /**
+         * all js files of project to vet
+         */
         allJs: [
             './src/**/*.js',
             './*.js'
         ],
-        client: client,
+
         css: [
             temp + 'styles.css',
             clientStyles + '*.css',
         ],
-        index: client + 'index.html',
+
         js: [
             clientApp + '**/*.module.js',
             clientApp + '**/*.js',
@@ -33,13 +47,19 @@ module.exports = function() {
         ],
         less: clientStyles + 'styles.less',
 
-        //all bower and npm paths
+        /**
+         * all bower and npm paths
+         */
         bower: {
             json: require('./bower.json'),
             directory: './bower_components/',
             ignorePath: '../..'
 
         },
+        packages: [
+            './package.json',
+            './bower.json'
+        ],
 
         /**
          * template cache
@@ -53,7 +73,19 @@ module.exports = function() {
             }
         },
         getWiredepDefaultOptions: getWiredepDefaultOptions,
-        getNodeOptions: getNodeOptions
+
+        /**
+         * node options
+         */
+        nodeServer: server + 'app.js',
+        defaultPort: 7203,
+
+        getNodeOptions: getNodeOptions,
+
+        /**
+         * browser sync
+         */
+        browserReloadDelay: 1000
 
     };
 
@@ -68,9 +100,15 @@ module.exports = function() {
         return options;
     }
 
-    function getNodeOptions() {
+    function getNodeOptions(isDev, port) {
         var nodeOptions = {
-
+            script: config.nodeServer,
+            delayTime: 1,
+            env: {
+                'PORT': port,
+                'NODE_ENV': isDev ? 'dev' : 'build'
+            },
+            watch: [config.server]
         };
 
         return nodeOptions;

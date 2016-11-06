@@ -4,6 +4,7 @@ var config = require('./gulp.config')();
 var del = require('del');
 var wiredep = require('wiredep').stream;
 var browserSync = require('browser-sync');
+var port = process.env.PORT || config.defaultPort;
 
 var $p = require('gulp-load-plugins')({ lazy: true });
 
@@ -119,11 +120,32 @@ gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
 
 gulp.task('serve-dev', ['inject'], function() {
     log('Setting up and running dev environment');
-    var nodeOptions = config.getNodeOptions();
-    return $p.nodemon(nodeOptions);
+    serve(true);
 });
 
 /////////////
+
+function serve(isDev, specRunner) {
+    var nodeOptions = config.getNodeOptions(isDev, port);
+    return $p.nodemon(nodeOptions)
+        .on('restart', function(ev) {
+            log('*** nodemon restarted');
+            log('files changed on restart:\n' + ev);
+            setTimeout(function() {
+                browserSync.notify('reloading now ...');
+                browserSync.reload({ stream: false });
+            }, config.browserReloadDelay);
+        })
+        .on('start', function() {
+            log('*** nodemon started');
+        })
+        .on('crash', function() {
+            log('*** nodemon crashed: script crashed for some reason');
+        })
+        .on('exit', function() {
+            log('*** nodemon exited cleanly');
+        });
+}
 
 function clean(path) {
     log('Cleaning: ' + $p.util.colors.blue(path));
