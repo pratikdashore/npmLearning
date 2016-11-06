@@ -10,6 +10,10 @@ module.exports = function() {
         //temp files folder
 
         temp: temp,
+        build: './build/',
+        fonts: './bower_components/font-awesome/fonts/**/*.*',
+        images: clientContent + 'images/**/*.*',
+        htmltemplates: clientApp + '**/*.html',
 
         // all js files of project to vet
         allJs: [
@@ -35,6 +39,18 @@ module.exports = function() {
             directory: './bower_components/',
             ignorePath: '../..'
 
+        },
+
+        /**
+         * template cache
+         */
+        templateCache: {
+            file: 'templates.js',
+            options: {
+                module: 'app.core',
+                standAlone: false,
+                root: 'app/'
+            }
         },
         getWiredepDefaultOptions: getWiredepDefaultOptions,
         getNodeOptions: getNodeOptions

@@ -11,10 +11,6 @@ gulp.task('help', $p.taskListing);
 
 gulp.task('default', ['help']);
 
-gulp.task('hello-world', function() {
-    log('hello gulp');
-});
-
 gulp.task('vet', function() {
 
     log('Analyzing source with jscs and jshint');
@@ -40,18 +36,67 @@ gulp.task('styles', ['clean-styles'], function() {
         .pipe(gulp.dest(config.temp));
 });
 
-gulp.task('clean-styles', function(done) {
+gulp.task('fonts', ['clean-fonts'], function() {
+    log('Copying fonts');
 
-    log('cleaning up all css files from .tmp');
+    return gulp
+        .src(config.fonts)
+        .pipe(gulp.dest(config.build + 'fonts'));
+});
 
-    var files = config.temp + '**/*.css';
-    clean(files, done);
+gulp.task('images', ['clean-images'], function() {
+    log('Copying and compressing the images');
+
+    return gulp
+        .src(config.images)
+        .pipe($p.imagemin({ optimizationLevel: 4 }))
+        .pipe(gulp.dest(config.build + 'images'));
+});
+
+gulp.task('clean', function(done) {
+    var delconfig = [].concat(config.build, config.temp);
+    log('Cleaning: ' + $p.util.colors.blue(delconfig));
+    return del(delconfig, done);
+});
+
+gulp.task('clean-styles', function() {
+    return clean(config.temp + '**/*.css');
+});
+
+gulp.task('clean-fonts', function() {
+    return clean(config.build + 'fonts/**/*.*');
+});
+
+gulp.task('clean-images', function() {
+    return clean(config.build + 'images/**/*.*');
+});
+
+gulp.task('clean-code', function() {
+    var files = [].concat(
+        config.temp + '**/*.js',
+        config.build + '**/*.html',
+        config.build + 'js/**/*.js'
+    );
+    return clean(files);
 });
 
 gulp.task('less-watcher', function() {
 
     return gulp
         .watch([config.less], ['styles']);
+});
+
+gulp.task('templatecache', ['clean-code'], function() {
+    log('Creating AngularJS $templateCache');
+
+    return gulp
+        .src(config.htmltemplates)
+        .pipe($p.minifyHtml({ empty: true }))
+        .pipe($p.angularTemplatecache(
+            config.templateCache.file,
+            config.templateCache.options
+        ))
+        .pipe(gulp.dest(config.temp));
 });
 
 gulp.task('wiredep', function() {
@@ -64,7 +109,7 @@ gulp.task('wiredep', function() {
         .pipe(gulp.dest(config.client));
 });
 
-gulp.task('inject', ['wiredep'], function() {
+gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
     log('Wire up the app css into html and call wiredep');
     return gulp
         .src(config.index)
@@ -80,9 +125,9 @@ gulp.task('serve-dev', ['inject'], function() {
 
 /////////////
 
-function clean(path, done) {
-    log('cleaning ' + $p.util.colors.blue(path));
-    del(path, done);
+function clean(path) {
+    log('Cleaning: ' + $p.util.colors.blue(path));
+    return del(path);
 }
 
 function log(msg) {
