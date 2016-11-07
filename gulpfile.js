@@ -5,6 +5,7 @@ var del = require('del');
 var wiredep = require('wiredep').stream;
 var browserSync = require('browser-sync');
 var port = process.env.PORT || config.defaultPort;
+var _ = require('lodash');
 
 var $p = require('gulp-load-plugins')({ lazy: true });
 
