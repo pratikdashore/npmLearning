@@ -6,6 +6,7 @@ var wiredep = require('wiredep').stream;
 var browserSync = require('browser-sync');
 var port = process.env.PORT || config.defaultPort;
 var _ = require('lodash');
+var path = require('path');
 
 var $p = require('gulp-load-plugins')({ lazy: true });
 
@@ -119,6 +120,19 @@ gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
         .pipe(gulp.dest(config.client));
 });
 
+gulp.task('build', ['optimize', 'images', 'fonts'], function() {
+    log('Building everything');
+
+    var msg = {
+        title: 'gulp build',
+        subtitle: 'Deployed to the build folder',
+        message: 'Running `gulp serve-build`'
+    };
+    del(config.temp);
+    log(msg);
+    notify(msg);
+});
+
 //need to create test task
 gulp.task('optimize', ['inject'], function() {
     log('Optimizing the javascript, css, html');
@@ -168,6 +182,10 @@ gulp.task('optimize', ['inject'], function() {
 gulp.task('serve-dev', ['inject'], function() {
     log('Setting up and running dev environment');
     serve(true);
+});
+
+gulp.task('serve-build', ['build'], function() {
+    serve(false);
 });
 
 /////////////
@@ -259,4 +277,15 @@ function log(msg) {
     } else {
         $p.util.log($p.util.colors.blue(msg));
     }
+}
+
+function notify(options) {
+    var notifier = require('node-notifier');
+    var notifyOptions = {
+        sound: 'Bottle',
+        contentImage: path.join(__dirname, 'gulp.png'),
+        icon: path.join(__dirname, 'gulp.png')
+    };
+    _.assign(notifyOptions, options);
+    notifier.notify(notifyOptions);
 }

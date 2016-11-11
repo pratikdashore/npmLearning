@@ -4,6 +4,7 @@
     angular
         .module('npmLearning', ['ui-router', 'ui.bootstrap']);
 
+
     var list = document.getElementsByTagName('section'),
         nameKeys = [],
         counter = 0,
