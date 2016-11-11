@@ -123,11 +123,13 @@ gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
 gulp.task('optimize', ['inject'], function() {
     log('Optimizing the javascript, css, html');
 
-    var assets = $p.useref({ searchPath: './' });
-    var templateCache = config.temp + config.templateCache.file;
-    var cssFilter = $p.filter('**/*.css', { restore: true });
-    var jsLibFilter = $p.filter('**/' + config.optimized.lib, { restore: true });
-    var jsAppFilter = $p.filter('**/' + config.optimized.app, { restore: true });
+    var assets = $p.useref({ searchPath: './' }),
+        templateCache = config.temp + config.templateCache.file,
+        cssFilter = $p.filter('**/*.css', { restore: true }),
+        jsLibFilter = $p.filter('**/' + config.optimized.lib, { restore: true }),
+        jsAppFilter = $p.filter('**/' + config.optimized.app, { restore: true }),
+        notIndexFilter = $p.filter(['**/*', '!**/index.html'], { restore: true }),
+        lazypipe = require('lazypipe');
 
     return gulp
         .src(config.index)
@@ -136,17 +138,31 @@ gulp.task('optimize', ['inject'], function() {
             gulp.src(templateCache, { read: false }), {
                 starttag: '<!-- inject:templates:js -->'
             }))
-        .pipe($p.useref({ searchPath: './' }))
-        .pipe(cssFilter)
+        .pipe($p.useref({ searchPath: './' }, lazypipe().pipe($p.sourcemaps.init, { loadMaps: true })))
+
+    .pipe(cssFilter)
         .pipe($p.csso())
         .pipe(cssFilter.restore)
-        .pipe(jsLibFilter)
+
+    .pipe(jsLibFilter)
         .pipe($p.uglify())
         .pipe(jsLibFilter.restore)
-        .pipe(jsAppFilter)
+
+    .pipe(jsAppFilter)
+        .pipe($p.ngAnnotate())
         .pipe($p.uglify())
         .pipe(jsAppFilter.restore)
-        .pipe(gulp.dest(config.build));
+
+    .pipe(notIndexFilter)
+        .pipe($p.rev())
+        .pipe(notIndexFilter.restore)
+
+    .pipe($p.revReplace())
+        .pipe($p.sourcemaps.write('.'))
+        .pipe(gulp.dest(config.build))
+        .pipe($p.rev.manifest())
+
+    .pipe(gulp.dest(config.build));
 });
 
 gulp.task('serve-dev', ['inject'], function() {

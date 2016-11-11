@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('npmLearning', []);
+        .module('npmLearning', ['ui-router', 'ui.bootstrap']);
 
     var list = document.getElementsByTagName('section'),
         nameKeys = [],
