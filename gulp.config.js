@@ -75,7 +75,13 @@ module.exports = function() {
                 root: 'app/'
             }
         },
-
+        /**
+         * optimized files
+         */
+        optimized: {
+            app: 'app.js',
+            lib: 'lib.js'
+        },
         /**
          * specs.html, our HTML spec runner
          */

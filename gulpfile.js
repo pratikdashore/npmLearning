@@ -119,6 +119,36 @@ gulp.task('inject', ['wiredep', 'styles', 'templatecache'], function() {
         .pipe(gulp.dest(config.client));
 });
 
+//need to create test task
+gulp.task('optimize', ['inject'], function() {
+    log('Optimizing the javascript, css, html');
+
+    var assets = $p.useref({ searchPath: './' });
+    var templateCache = config.temp + config.templateCache.file;
+    var cssFilter = $p.filter('**/*.css', { restore: true });
+    var jsLibFilter = $p.filter('**/' + config.optimized.lib, { restore: true });
+    var jsAppFilter = $p.filter('**/' + config.optimized.app, { restore: true });
+
+    return gulp
+        .src(config.index)
+        .pipe($p.plumber())
+        .pipe($p.inject(
+            gulp.src(templateCache, { read: false }), {
+                starttag: '<!-- inject:templates:js -->'
+            }))
+        .pipe($p.useref({ searchPath: './' }))
+        .pipe(cssFilter)
+        .pipe($p.csso())
+        .pipe(cssFilter.restore)
+        .pipe(jsLibFilter)
+        .pipe($p.uglify())
+        .pipe(jsLibFilter.restore)
+        .pipe(jsAppFilter)
+        .pipe($p.uglify())
+        .pipe(jsAppFilter.restore)
+        .pipe(gulp.dest(config.build));
+});
+
 gulp.task('serve-dev', ['inject'], function() {
     log('Setting up and running dev environment');
     serve(true);
