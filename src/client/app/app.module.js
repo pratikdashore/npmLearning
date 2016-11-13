@@ -47,23 +47,38 @@
     var radn = [];
 
     for (var k = 0; k < titleList.length; k++) {
-        radn.push(Math.floor((Math.random() * (100000 - 30000)) + 30000));
+        radn.push(Math.floor((Math.random() * (90000 - 30000)) + 30000));
     }
 
     radn.sort(function(a, b) { return a - b; });
 
     function downloadVideo(uri, name) {
-        var link = document.createElement('a');
+        var link = document.createElement('a'),
+            names = {},
+            myRegexp = /(\d+\.mp4)/g,
+            adder = 0,
+            endTime, hitTime, match, mValue;
+
         link.setAttribute('download', name);
         link.href = uri;
-        var names = {};
-        var myRegexp = /(\d+\.mp4)/g;
-        var match = myRegexp.exec(uri);
-        names.key = match[1];
+
+        match = myRegexp.exec(uri)[1];
+
+        mValue = match.split('').splice(0, match.indexOf('.mp4')).join('');
+
+        nameKeys.forEach(function(kv) {
+            if (kv.key.indexOf(mValue) > -1) {
+                adder += 1;
+            }
+        });
+
+        names.key = adder > 0 ? mValue + ' (' + adder + ')' : mValue;
+        names.key += '.mp4';
         names.value = name;
+
         nameKeys.push(names);
-        var endTime = Date.now();
-        var hitTime = (endTime - startTime) / 1000;
+        endTime = Date.now();
+        hitTime = (endTime - startTime) / 1000;
         console.log('Hitted ' + name + ' After ' + hitTime + ' secs');
         startTime = Date.now();
         link.click();
