@@ -63,7 +63,11 @@ gulp.task('clean', function(done) {
 });
 
 gulp.task('clean-styles', function() {
-    return clean(config.temp + '**/*.css');
+    var files = [].concat(
+        config.temp + '**/*.css',
+        config.build + 'styles/**/*.css'
+    );
+    return clean(files);
 });
 
 gulp.task('clean-fonts', function() {
